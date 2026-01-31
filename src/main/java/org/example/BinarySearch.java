@@ -132,4 +132,66 @@ public class BinarySearch {
         }
         return ans;
     }
+    public static int aggressiveCows(int[] arr,int cows){
+        int low = 1;
+        int high = arr[arr.length-1]-arr[0];
+        int ans =1;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(checkCows(arr,mid,cows)){
+                ans=mid;
+                low=mid+1;
+            }else{
+                high=mid-1;
+            }
+        }
+        return ans;
+    }
+    public static boolean checkCows(int[] arr, int mid, int cows){
+        int last_placed = arr[0];
+        int count =1;
+        for(int i =1;i<arr.length-1;i++){
+            if(arr[1]-last_placed>=mid){
+                last_placed=arr[i];
+                count++;
+                if(count==cows)return true;
+            }
+        }
+        return false;
+    }
+    public static int painterPartitionProblem(int[] arr, int workers){
+        int low = arr[0];
+        int ans =0;
+        int high = 0;
+        for(int i =0;i<arr.length;i++){
+            high+=arr[i];
+            low = Math.max(low,arr[i]);
+        }
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(checkPainters(arr,workers,mid)){
+                ans= mid;
+                high=mid-1;
+            }else{
+                low = mid+1;
+            }
+        }
+        return ans;
+
+    }
+    public static boolean checkPainters(int[] arr, int workers, int mid){
+        int worker = 1;
+        int timespent = 0;
+        for(int i =0;i< arr.length;i++){
+            if(arr[i]>mid)return false;
+            if(arr[i]+timespent<=mid){
+                timespent=arr[i]+timespent;
+            }else{
+                worker++;
+                timespent=arr[i];
+            }
+        }
+        if(worker<=workers)return true;
+        return false;
+    }
 }
