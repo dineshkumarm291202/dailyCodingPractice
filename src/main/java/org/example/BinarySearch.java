@@ -194,4 +194,49 @@ public class BinarySearch {
         if(worker<=workers)return true;
         return false;
     }
+    public static int findNthRoot(int n, int m){
+        if(m<=1)return m;
+        int low =1;
+        int high = m;
+        while(low<=high){
+            int mid =low+(high-low)/2;
+            if(findPower(mid,n,m)==m)return mid;
+            if(findPower(mid,n,m)< m)low = mid+1;
+            else high = mid-1;
+        }
+        return -1;
+    }
+    public static int findPower(int base, int exp, int limit){
+        int result = 1;
+        for(int i =0;i<exp;i++){
+            result*=base;
+            if(result>limit)return result;
+        }
+        return result;
+    }
+    public static int findKoko(int[] arr, int hour){
+        int low =1;
+        int high= arr[0];
+        for(int i =0;i<arr.length;i++){
+            high = Math.max(arr[i],high);
+        }
+        int ans = high;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(findFeasbilityForKoko(arr,hour,mid)){
+                ans = mid;
+                high =mid-1;
+            }else{
+                low =mid+1;
+            }
+        }return ans;
+    }
+    public static boolean findFeasbilityForKoko(int[] arr, int hour, int mid){
+        int hours = 0;
+        for(int i=0;i<arr.length;i++){
+            hours += (arr[i] + mid - 1) / mid;
+        }
+        if(hours<=hour)return true;
+        return false;
+    }
 }
