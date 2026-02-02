@@ -81,6 +81,7 @@ public class BinarySearch {
             }
             return nums[low];
     }
+    //finding the minimun element
         public int findMin(int[] nums) {
             int low = 0, high = nums.length - 1;
 
@@ -95,6 +96,7 @@ public class BinarySearch {
             }
             return nums[low];
         }
+        //Finding peak element
     public static int findPeakElement(int[] nums) {
         int low = 0, high = nums.length - 1;
 
@@ -116,6 +118,7 @@ public class BinarySearch {
         // Return peak index
         return low;
     }
+    //finding squareroot
     public static int findSquareRoot(int x){
         if(x<2)return x;
         int left = 1; int right = x/2;
@@ -132,6 +135,7 @@ public class BinarySearch {
         }
         return ans;
     }
+    //Aggressive cows problem
     public static int aggressiveCows(int[] arr,int cows){
         int low = 1;
         int high = arr[arr.length-1]-arr[0];
@@ -159,6 +163,7 @@ public class BinarySearch {
         }
         return false;
     }
+    //PAINTER PARTITION PROBLEM
     public static int painterPartitionProblem(int[] arr, int workers){
         int low = arr[0];
         int ans =0;
