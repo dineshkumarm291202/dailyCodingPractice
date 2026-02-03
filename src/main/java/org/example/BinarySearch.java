@@ -244,4 +244,65 @@ public class BinarySearch {
         if(hours<=hour)return true;
         return false;
     }
+    //Code to find the SmallestDivisor
+    public int smallestDivisor(int[] nums, int threshold) {
+        int low = 1;
+        int high = Integer.MIN_VALUE;
+        for(int i=0;i<nums.length;i++){
+            high = Math.max(high,nums[i]);
+        }
+        int ans =1;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(checkPossible(nums,mid,threshold)){
+                ans = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
+            }
+        }
+        return ans;
+    }
+    public boolean checkPossible(int[] arr,int mid,int threshold){
+        int ans =0;
+        for(int i =0;i<arr.length;i++){
+            ans+=(arr[i]+mid-1)/mid;
+        }
+        if(ans<=threshold)return true;
+        return false;
+    }
+    //Minimum Days to Make the bouquet
+    public int minDays(int[] bloomDay, int m, int k) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for(int num:bloomDay){
+            min=Math.min(num,min);
+            max=Math.max(num,max);
+        }
+        int ans = -1;
+        while(min<=max){
+            int mid = min+(max-min)/2;
+            if( checkIfPossible(bloomDay,mid,m,k)){
+                ans = mid;
+                max=mid-1;
+            }
+            else min = mid+1;
+        }
+        return ans;
+    }public static boolean checkIfPossible(int[] arr,int mid, int m, int k){
+        int count=0;
+        int bouquet =0;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]<=mid){
+                count++;
+                if(count==k){
+                    bouquet++;
+                    count=0;
+                }
+            }if(arr[i]>mid){
+                count=0;
+            }if(bouquet==m)return true;
+        }
+        return false;
+    }
 }
