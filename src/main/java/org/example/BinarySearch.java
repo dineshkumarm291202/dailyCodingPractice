@@ -305,4 +305,5 @@ public class BinarySearch {
         }
         return false;
     }
+    //Cheating for consistency
 }
