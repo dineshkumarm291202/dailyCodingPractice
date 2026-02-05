@@ -306,4 +306,38 @@ public class BinarySearch {
         return false;
     }
     //Cheating for consistency
+    public int shipWithinDays(int[] weights, int days) {
+        int low = Integer.MIN_VALUE;
+        int high = 0;
+        for(int i =0;i<weights.length;i++){
+            low = Math.max(low,weights[i]);
+            high+=weights[i];
+        }
+        int ans = Integer.MAX_VALUE;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if(checkIsShipmentPossible(weights, days, mid)){
+                ans = mid;
+                high = mid-1;
+            }else{
+                low = mid+1;
+            }
+        }
+        return ans;
+    }
+    public boolean checkIsShipmentPossible(int[] arr, int days, int mid){
+        int count =0;
+        int day = 1;
+        for(int i =0;i<arr.length;i++){
+            if(count+arr[i]>mid){
+                day++;                  // CHANGED
+                count = arr[i];         // CHANGED (was: count = 0)
+                if(day>days) return false;
+            }else{
+                count += arr[i];        // CHANGED placement
+            }
+
+        }
+        return true;
+    }
 }
