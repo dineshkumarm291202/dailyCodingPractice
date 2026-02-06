@@ -340,4 +340,54 @@ public class BinarySearch {
         }
         return true;
     }
+    //Book Allocation binary search Problem
+    public int findPages(int[] arr, int n, int m) {
+
+        // Not enough books
+        if (n < m) return -1;
+
+        int max = 0;
+        int sum = 0;
+
+        for (int pages : arr) {
+            max = Math.max(max, pages);
+            sum += pages;
+        }
+
+        int low = max;
+        int high = sum;
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (canAllocate(arr, m, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canAllocate(int[] arr, int m, int maxPages) {
+        int students = 1;
+        int pagesSum = 0;
+
+        for (int pages : arr) {
+            if (pagesSum + pages > maxPages) {
+                students++;
+                pagesSum = pages;
+
+                if (students > m) {
+                    return false;
+                }
+            } else {
+                pagesSum += pages;
+            }
+        }
+        return true;
+    }
 }
