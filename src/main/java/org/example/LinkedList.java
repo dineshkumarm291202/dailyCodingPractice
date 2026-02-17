@@ -71,5 +71,6 @@ public class LinkedList {
         return head;
     }
     /// added sample line
+    //sorry for the day
 
 }
