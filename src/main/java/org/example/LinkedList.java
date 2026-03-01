@@ -72,6 +72,105 @@ public class LinkedList {
     }
     /// added sample line
     //sorry for the day
-    //
+    public boolean hasCycleLoop(Node head) {
+        Node fast=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null ){
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast==slow)return true;
+        }
+        return false;
+    }
+    public Node detectCycle(Node head) {
+        Node fast=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null ){
+            fast=fast.next.next;
+            slow=slow.next;
+            if (slow == fast) {   // cycle found
 
+                // Step 2: Find cycle start
+                slow = head;
+
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+
+                return slow;  // start node of cycle
+            }
+        }
+
+        return null;
+    }
+    public int findCycleLength(Node head) {
+
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {  // Cycle detected
+                int length = 1;
+                Node temp = slow.next;
+
+                while (temp != slow) {
+                    length++;
+                    temp = temp.next;
+                }
+
+                return length;
+            }
+        }
+
+        return 0; // No cycle
+    }
+    public boolean isPalindrome1(Node head) {
+        StringBuilder sb=new StringBuilder();
+        Node temp = head;
+        while(temp!=null){
+            sb.append(temp.data);
+            temp=temp.next;
+        }
+        String original = sb.toString();
+        String reversed = new StringBuilder(sb).reverse().toString();
+        if(original.equals(reversed))return true;
+        return false;
+    }
+    public boolean isPalindrome(Node head) {
+        if (head == null || head.next == null) return true;
+
+        // Step 1: Find middle
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Step 2: Reverse second half
+        Node prev = null;
+        while (slow != null) {
+            Node next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+
+        // Step 3: Compare first and second half
+        Node first = head;
+        Node second = prev;
+
+        while (second != null) {
+            if (first.data != second.data) return false;
+            first = first.next;
+            second = second.next;
+        }
+
+        return true;
+    }
 }
