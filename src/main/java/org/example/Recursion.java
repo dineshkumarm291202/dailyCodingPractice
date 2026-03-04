@@ -134,4 +134,47 @@ public class Recursion {
 
         return list;
     }
+    public List<List<String>> solveNQueens1(int n) {
+        char[][] board = new char[n][n];
+        for(int i =0;i<n;i++){
+            Arrays.fill(board[i],',');
+        }
+        List<List<String>> result = new ArrayList<>();
+        backtracking(0,n,result,board);
+        return result;
+    }
+    public void backtracking(int start, int end, List<List<String>> result,char[][] board){
+        if(start==end){
+            result.add(construct(board));
+            return;
+        }
+        for(int i =0;i<end;i++) {
+            if (isSafe(board, start, i, end)) {
+                board[start][i] = 'Q';
+                backtracking(start + 1, end, result, board);
+                board[start][i] = ',';
+            }
+        }
+    }
+    public ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A) {
+        Collections.sort(A);
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        solve(0, A, new ArrayList<>(), result);
+        return result;
+    }
+
+    public void solve(int start,
+                      ArrayList<Integer> A,
+                      ArrayList<Integer> current,
+                      ArrayList<ArrayList<Integer>> result) {
+
+        // Add at every level
+        result.add(new ArrayList<>(current));
+
+        for(int i = start; i < A.size(); i++) {
+            current.add(A.get(i));
+            solve(i + 1, A, current, result);
+            current.remove(current.size() - 1);
+        }
+    }
 }
