@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Recursion {
@@ -176,5 +177,65 @@ public class Recursion {
             solve(i + 1, A, current, result);
             current.remove(current.size() - 1);
         }
+    }
+    int rows, cols;
+    int totalCells = 0;
+    int result = 0;
+
+    public int solve(int[][] A) {
+
+        rows = A.length;
+        cols = A[0].length;
+
+        int startRow = 0, startCol = 0;
+
+        // Step 1: Count non-obstacle cells & find start
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+
+                if (A[i][j] != -1) {
+                    totalCells++;
+                }
+
+                if (A[i][j] == 1) {
+                    startRow = i;
+                    startCol = j;
+                }
+            }
+        }
+
+        dfs(A, startRow, startCol, totalCells);
+
+        return result;
+    }
+
+    private void dfs(int[][] A, int r, int c, int remaining) {
+
+        // Boundary checks
+        if (r < 0 || c < 0 || r >= rows || c >= cols || A[r][c] == -1) {
+            return;
+        }
+
+        // If reached end
+        if (A[r][c] == 2) {
+            if (remaining == 1) { // Only end cell left
+                result++;
+            }
+            return;
+        }
+
+        // Mark visited
+        int temp = A[r][c];
+        A[r][c] = -1;   // mark as obstacle
+        remaining--;
+
+        // Explore 4 directions
+        dfs(A, r + 1, c, remaining);
+        dfs(A, r - 1, c, remaining);
+        dfs(A, r, c + 1, remaining);
+        dfs(A, r, c - 1, remaining);
+
+        // Backtrack
+        A[r][c] = temp;
     }
 }
